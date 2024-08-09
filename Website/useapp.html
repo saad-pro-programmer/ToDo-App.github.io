@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("deer.jpg");
+            background-size: cover;
+            height: 55vh;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .task-input {
+            padding: 8px;
+            font-size: 16px;
+            width: calc(40% - 150px); /* Adjust width to fit alongside button and dropdown */
+            margin-right: 10px;
+            border-radius: 50px;
+            background-color: transparent;
+            border: 2px solid green;
+        }
+        .task-status-select, .task-button {
+            margin-right: 10px;
+            border-radius: 50px;
+            border: 2px solid green;
+            background: transparent;
+            font-size: 16px;
+        }
+        .task-button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: transparent;
+            color: black;
+            border: 2px solid green;
+            border-radius: 50px;
+            width: 170px;
+            text-align: center;
+            height: 54px;
+        }
+        .task-status.done {
+            background-color: green;
+            color: white;
+        }
+        .task-status.incomplete {
+            background-color: red;
+            color: white;
+        }
+        .task-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            
+            border-radius: 5px;
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-status {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .status-select-wrapper {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .status-select-wrapper label {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="#" class="navbar-brand">Saad.</a>
+            </div>
+            <div class="navbar-right">
+                <a href="index.html">Home</a>
+                <a href="contact.html">Contact</a>
+                <button class="navbar-button" onclick="location.href='useapp.html'">Use App</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="task-page">
+        <h2>Enter Your Task:</h2>
+        <!-- Input field for task name -->
+        <input type="text" id="task-input" placeholder="Enter your task here" class="task-input">
+
+        <!-- Dropdown menu or radio buttons for selecting task status -->
+        <div class="status-select-wrapper">
+            <label for="task-status" style="padding-left: 505px;";font-size:16px;>Status:</label>
+            <select id="task-status" class="task-status-select">
+                <option value="incomplete">Incomplete</option>
+                <option value="done">Done</option>
+            </select>
+        </div>
+
+        <button id="add-task-button" class="task-button">Add Task</button>
+        <div id="task-list" class="task-list">
+            <!-- Tasks will be added here dynamically -->
+        </div>
+    </main>
+
+    <script>
+        // Function to add a new task
+        function addTask(taskName, status) {
+            const taskItem = document.createElement('div');
+            taskItem.classList.add('task-item');
+            taskItem.innerHTML = `
+                <p>${taskName}</p>
+                <button class="task-status ${status}" onclick="toggleStatus(this)">${status === 'done' ? 'Done' : 'Incomplete'}</button>
+            `;
+            document.getElementById('task-list').appendChild(taskItem);
+        }
+
+        // Function to handle adding a task
+        document.getElementById('add-task-button').addEventListener('click', function() {
+            const taskInput = document.getElementById('task-input');
+            const taskStatus = document.getElementById('task-status').value;
+            const taskName = taskInput.value.trim();
+            
+            if (taskName) {
+                addTask(taskName, taskStatus);
+                taskInput.value = ''; // Clear the input field after adding the task
+            } else {
+                alert('Please enter a task.');
+            }
+        });
+
+        // Function to toggle task status
+        function toggleStatus(button) {
+            if (button.classList.contains('done')) {
+                button.classList.remove('done');
+                button.classList.add('incomplete');
+                button.textContent = 'Incomplete';
+            } else {
+                button.classList.remove('incomplete');
+                button.classList.add('done');
+                button.textContent = 'Done';
+            }
+        }
+    </script>
+</body>
+</html>
